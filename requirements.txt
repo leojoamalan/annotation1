@@ -7,3 +7,4 @@ numpy
 matplotlib
 opencv-python
 super-gradients
+requests
