@@ -40,27 +40,6 @@ def preprocess_image(image):
     img_tensor = img_tensor.unsqueeze(0)  # Add batch dimension
     return img_tensor
 
-def predict_and_annotate(image, model, conf_threshold=0.35):
-    img_tensor = preprocess_image(image)
-    with torch.no_grad():
-        output = model(img_tensor)
-    
-    # Assume the output is for a classification task (modify as needed for other tasks)
-    output = torch.nn.functional.softmax(output, dim=1)
-    confidence, predicted_class = torch.max(output, 1)
-    
-    if confidence.item() >= conf_threshold:
-        result_text = f'Predicted class: {predicted_class.item()} with confidence {confidence.item():.2f}'
-    else:
-        result_text = f'No class met the confidence threshold of {conf_threshold}'
-    
-    # For segmentation, assuming binary mask example
-    output = output.squeeze().cpu().numpy()
-    mask = (output > conf_threshold).astype(np.uint8)
-    mask_image = Image.fromarray(mask * 255)
-    annotated_image = Image.blend(image.convert('RGBA'), mask_image.convert('RGBA'), alpha=0.5)
-    
-    return annotated_image, result_text
 
 def main():
     st.title("Kidney Stone Annotation Tool")
