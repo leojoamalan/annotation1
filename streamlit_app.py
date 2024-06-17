@@ -66,7 +66,7 @@ def main():
     st.title("Kidney Stone Annotation Tool")
     st.write("Upload an image to get started.")
     
-    model_url = "https://your-model-repository-url/best_model.pth"
+    model_url ="https://github.com/leojoamalan/annotation/blob/main/best_model.pth"
     model = download_and_load_model(model_url)
     
     if model:
