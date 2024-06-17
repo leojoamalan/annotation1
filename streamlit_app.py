@@ -46,16 +46,17 @@ def main():
     
     model_url ="https://github.com/leojoamalan/annotation/blob/main/best_model.pth"
     model = download_and_load_model(model_url)
-
-    uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
-    if uploaded_file is not None:
-        image = Image.open(uploaded_file)
-        st.image(image, caption='Uploaded Image', use_column_width=True)
-            
-        st.write("Annotating...")
-        annotated_image = model.predict(preprocess_image,conf=0.35)
-            
-        st.image(annotated_image.show(), caption='Annotated Image', use_column_width=True)
+    if model:
+        
+        uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+        if uploaded_file is not None:
+            image = Image.open(uploaded_file)
+            st.image(image, caption='Uploaded Image', use_column_width=True)
+                
+            st.write("Annotating...")
+            annotated_image = model.predict(preprocess_image,conf=0.35)
+                
+            st.image(annotated_image.show(), caption='Annotated Image', use_column_width=True)
 
 if __name__ == "__main__":
     main()
