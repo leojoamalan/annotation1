@@ -5,6 +5,7 @@ from PIL import Image, ImageDraw
 import numpy as np
 import os
 import requests
+import io
 
 @st.cache(allow_output_mutation=True)
 def download_and_load_model(url, model_path="best_model.pth"):
@@ -21,7 +22,7 @@ def download_and_load_model(url, model_path="best_model.pth"):
             return None
 
     try:
-        model = torch.load(model_path, map_location=torch.device('cpu'))
+       model = torch.load(io.BytesIO(response.content), map_location=torch.device('cpu'))
         model.eval()
         st.success("Model loaded successfully")
         return model
