@@ -7,7 +7,7 @@ import os
 import requests
 import io
 
-@st.cache_data(allow_output_mutation=True)
+@st.cache(allow_output_mutation=True)
 def load_model(model_url):
     try:
         response = requests.get(model_url)
