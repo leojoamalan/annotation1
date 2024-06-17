@@ -7,8 +7,8 @@ import os
 
 @st.cache(allow_output_mutation=True)
 def load_model():
-    model_path = os.path.join("model", "best_model.pth")
-    model = torch.load(model_path, map_location=torch.device('cpu'))
+    # model_path = os.path.join("model", "best_model.pth")
+    model = torch.load("https://github.com/leojoamalan/annotation/blob/main/best_model.pth", map_location=torch.device('cpu'))
     model.eval()
     return model
 
