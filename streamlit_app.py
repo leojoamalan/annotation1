@@ -12,7 +12,7 @@ def load_model(model_url):
     try:
         response = requests.get(model_url)
         response.raise_for_status()
-        model = torch.load(io.BytesIO(response.content), map_location=torch.device('cpu'))
+        model = torch.load(response.content, map_location=torch.device('cpu'))
         model.eval()
         return model
     except Exception as e:
