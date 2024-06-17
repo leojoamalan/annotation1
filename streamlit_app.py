@@ -1,24 +1,33 @@
 import streamlit as st
 import torch
 from torchvision import transforms
-from PIL import Image
+from PIL import Image, ImageDraw
 import numpy as np
 import os
 import requests
 
 @st.cache(allow_output_mutation=True)
-def load_model():
-    model_path = "best_model.pth"
+def download_and_load_model(url, model_path="best_model.pth"):
     if not os.path.exists(model_path):
         # Download the model from a URL
-        url = "https://github.com/leojoamalan/annotation/blob/main/best_model.pth"
-        response = requests.get(url)
-        with open(model_path, 'wb') as f:
-            f.write(response.content)
-    
-    model = torch.load(model_path, map_location=torch.device('cpu'))
-    model.eval()
-    return model
+        try:
+            response = requests.get(url)
+            response.raise_for_status()  # Check if the download was successful
+            with open(model_path, 'wb') as f:
+                f.write(response.content)
+            st.success(f"Model downloaded successfully from {url}")
+        except requests.RequestException as e:
+            st.error(f"Failed to download the model: {e}")
+            return None
+
+    try:
+        model = torch.load(model_path, map_location=torch.device('cpu'))
+        model.eval()
+        st.success("Model loaded successfully")
+        return model
+    except Exception as e:
+        st.error(f"Failed to load the model: {e}")
+        return None
 
 def preprocess_image(image):
     preprocess = transforms.Compose([
@@ -57,18 +66,20 @@ def main():
     st.title("Kidney Stone Annotation Tool")
     st.write("Upload an image to get started.")
     
-    model = load_model()
+    model_url = "https://your-model-repository-url/best_model.pth"
+    model = download_and_load_model(model_url)
     
-    uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
-    if uploaded_file is not None:
-        image = Image.open(uploaded_file)
-        st.image(image, caption='Uploaded Image', use_column_width=True)
-        
-        st.write("Annotating...")
-        annotated_image, result_text = predict_and_annotate(image, model)
-        
-        st.image(annotated_image, caption='Annotated Image', use_column_width=True)
-        st.write(result_text)
+    if model:
+        uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+        if uploaded_file is not None:
+            image = Image.open(uploaded_file)
+            st.image(image, caption='Uploaded Image', use_column_width=True)
+            
+            st.write("Annotating...")
+            annotated_image, result_text = predict_and_annotate(image, model)
+            
+            st.image(annotated_image, caption='Annotated Image', use_column_width=True)
+            st.write(result_text)
 
 if __name__ == "__main__":
     main()
