@@ -16,10 +16,6 @@ def download_and_load_model(url, model_path="best_model.pth"):
             response.raise_for_status()  # Check if the download was successful
             with open(model_path, 'wb') as f:
                 f.write(response.content)
-            model = torch.load(io.BytesIO(response.content), map_location=torch.device('cpu'))
-            model.eval()
-            st.success("Model loaded successfully")
-            return model
             st.success(f"Model downloaded successfully from {url}")
         except requests.RequestException as e:
             st.error(f"Failed to download the model: {e}")
