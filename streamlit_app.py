@@ -16,19 +16,23 @@ def download_and_load_model(url, model_path="best_model.pth"):
             response.raise_for_status()  # Check if the download was successful
             with open(model_path, 'wb') as f:
                 f.write(response.content)
+             model = torch.load(io.BytesIO(response.content), map_location=torch.device('cpu'))
+            model.eval()
+            st.success("Model loaded successfully")
+            return model
             st.success(f"Model downloaded successfully from {url}")
         except requests.RequestException as e:
             st.error(f"Failed to download the model: {e}")
             return None
-    else:
-        try:
-            model = torch.load(io.BytesIO(response.content), map_location=torch.device('cpu'))
-            model.eval()
-            st.success("Model loaded successfully")
-            return model
-        except Exception as e:
-            st.error(f"Failed to load the model: {e}")
-            return None
+    
+    try:
+        model = torch.load(io.BytesIO(response.content), map_location=torch.device('cpu'))
+        model.eval()
+        st.success("Model loaded successfully")
+        return model
+    except Exception as e:
+        st.error(f"Failed to load the model: {e}")
+        return None
 
 def preprocess_image(image):
     preprocess = transforms.Compose([
@@ -48,7 +52,6 @@ def main():
     model_url ="https://github.com/leojoamalan/annotation/blob/main/best_model.pth"
     model = download_and_load_model(model_url)
     if model:
-        
         uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
         if uploaded_file is not None:
             image = Image.open(uploaded_file)
