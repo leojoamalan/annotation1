@@ -20,15 +20,15 @@ def download_and_load_model(url, model_path="best_model.pth"):
         except requests.RequestException as e:
             st.error(f"Failed to download the model: {e}")
             return None
-
-    try:
-        model = torch.load(io.BytesIO(response.content), map_location=torch.device('cpu'))
-        model.eval()
-        st.success("Model loaded successfully")
-        return model
-    except Exception as e:
-        st.error(f"Failed to load the model: {e}")
-        return None
+    else:
+        try:
+            model = torch.load(io.BytesIO(response.content), map_location=torch.device('cpu'))
+            model.eval()
+            st.success("Model loaded successfully")
+            return model
+        except Exception as e:
+            st.error(f"Failed to load the model: {e}")
+            return None
 
 def preprocess_image(image):
     preprocess = transforms.Compose([
