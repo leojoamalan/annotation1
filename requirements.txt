@@ -1,2 +1,9 @@
 streamlit
 pandas
+torch
+torchvision
+tensorflow
+numpy
+matplotlib
+opencv-python
+super-gradients
