@@ -13,7 +13,7 @@ def download_and_load_model(url, model_path="best_model.pth"):
         try:
             response = requests.get(url)
             response.raise_for_status()  # Check if the download was successful
-            with open(model_path, 'rb') as f:
+            with open(model_path, 'wb') as f:
                 f.write(response.content)
             st.success(f"Model downloaded successfully from {url}")
         except requests.RequestException as e:
