@@ -7,7 +7,7 @@ import os
 import requests
 import io
 
-@st.cache(allow_output_mutation=True)
+@st.cache_data(allow_output_mutation=True)
 def load_model(model_url):
     try:
         response = requests.get(model_url)
@@ -34,7 +34,7 @@ def main():
     st.title("Kidney Stone Annotation Tool")
     st.write("Upload an image to get started.")
     
-    model_url ="https://drive.google.com/file/d/1MPkwGD6Jx0b63mvdCKdIBubtCDHMaZry/view?usp=sharing"
+    model_url ="https://github.com/leojoamalan/annotation/blob/main/best_model.pth"
     model = load_model(model_url)
     if model:
         uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
