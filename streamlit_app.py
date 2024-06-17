@@ -31,34 +31,14 @@ def download_and_load_model(url, model_path="best_model.pth"):
 
 def preprocess_image(image):
     preprocess = transforms.Compose([
-        transforms.Resize(256),
-        transforms.CenterCrop(224),
-        transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-    ])
+    transforms.Resize(256),
+    transforms.CenterCrop(224),
+    transforms.ToTensor(),
+    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+])
     img_tensor = preprocess(image)
     img_tensor = img_tensor.unsqueeze(0)  # Add batch dimension
     return img_tensor
-def perform_inference(image, model, conf_threshold=0.35):
-    img_tensor = preprocess_image(image)
-    with torch.no_grad():
-        output = model(img_tensor)
-    
-    # Example post-processing for classification or segmentation task
-    output = torch.nn.functional.softmax(output, dim=1)
-    confidence, predicted_class = torch.max(output, 1)
-    
-    if confidence.item() >= conf_threshold:
-        result_text = f'Predicted class: {predicted_class.item()} with confidence {confidence.item():.2f}'
-    else:
-        result_text = f'No class met the confidence threshold of {conf_threshold}'
-    
-    # Example: Create a visualization based on output (modify based on your task)
-    output_image = (output > conf_threshold).squeeze().cpu().numpy().astype(np.uint8)
-    output_image = Image.fromarray(output_image * 255)
-    
-    return output_image
-
 
 def main():
     st.title("Kidney Stone Annotation Tool")
@@ -73,9 +53,9 @@ def main():
         st.image(image, caption='Uploaded Image', use_column_width=True)
             
         st.write("Annotating...")
-        annotated_image = perform_inference(image, model)
+        annotated_image = model.predict(preprocess_image,conf=0.35)
             
-        st.image(annotated_image, caption='Annotated Image', use_column_width=True)
+        st.image(annotated_image.show(), caption='Annotated Image', use_column_width=True)
 
 if __name__ == "__main__":
     main()
