@@ -63,9 +63,6 @@ def preprocess_image(image):
 #     annotated_image = Image.blend(image.convert('RGBA'), output_image.convert('RGBA'), alpha=0.5)
 
 #     return annotated_image, result_text
-def annotate_img(img_path,model):
-    img = model.predict(img_path,conf=0.35)
-    return img
 
 def main():
     st.title("Kidney Stone Annotation Tool")
@@ -80,7 +77,7 @@ def main():
         st.image(image, caption='Uploaded Image', use_column_width=True)
             
         st.write("Annotating...")
-        annotated_image = annotate_img(image,model)
+        annotated_image = model.predict(preporcess_image(uploaded_file),conf=0.35)
             
         st.image(annotated_image, caption='Annotated Image', use_column_width=True)
 
