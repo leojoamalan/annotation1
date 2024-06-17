@@ -11,7 +11,7 @@ def load_model():
     model_path = "best_model.pth"
     if not os.path.exists(model_path):
         # Download the model from a URL
-        url = "https://your-model-repository-url/best_model.pth"
+        url = "https://github.com/leojoamalan/annotation/blob/main/best_model.pth"
         response = requests.get(url)
         with open(model_path, 'wb') as f:
             f.write(response.content)
