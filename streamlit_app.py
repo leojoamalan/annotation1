@@ -224,9 +224,9 @@ def draw_detection(draw, detection):
 def draw_not_found(draw, image_size):
     font = ImageFont.load_default()
     text = "No objects found"
-    text_width, text_height = 125,125
+    text_width, text_height = 225,225
     text_position = ((image_size[0] - text_width) // 2, (image_size[1] - text_height) // 2)
-    draw.text(text_position, text, fill="red", font=font)
+    draw.text(text_position, text, fill="white", font=font)
 
 st.title("Kidney Stone Annotation")
 
@@ -255,7 +255,7 @@ if uploaded_file is not None:
     img_byte_arr = io.BytesIO()
     image.save(img_byte_arr, format='PNG')
     img_byte_arr = img_byte_arr.getvalue()
-
+if st.button('Annotate'):
     # Display the result image with detections or not found message
     st.image(image, caption='Processed Image.', use_column_width=True)
 
