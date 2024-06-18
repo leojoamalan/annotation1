@@ -109,7 +109,6 @@ if uploaded_file is not None:
         st.image(image, caption='Uploaded Image', use_column_width=True)
         result = CLIENT.infer(image, model_id="kidney-22s5u/1")
         # Draw the detections on the input image
-    if st.button('Annotate'):
         for detection in result['predictions']:
             draw_detection(draw, detection)
     
@@ -119,4 +118,5 @@ if uploaded_file is not None:
         img_byte_arr = img_byte_arr.getvalue()
     
         # Display the result image with detections
+     if st.button('Annotate'):
         st.image(image, caption='Processed Image.', use_column_width=True)
