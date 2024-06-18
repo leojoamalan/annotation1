@@ -101,15 +101,15 @@ st.title("Kidney Stone Annotation")
 
 # File uploader for image upload
 uploaded_file = st.file_uploader("Choose an image...", type="jpg")
-st.image(image, caption='Uploaded Image', use_column_width=True)
+
 if uploaded_file is not None:
     # Load the uploaded image
-    if st.button('Annotate'):
         image = Image.open(uploaded_file)
         draw = ImageDraw.Draw(image)
+        st.image(image, caption='Uploaded Image', use_column_width=True)
         result = CLIENT.infer(image, model_id="kidney-22s5u/1")
         # Draw the detections on the input image
-       
+    if st.button('Annotate'):
         for detection in result['predictions']:
             draw_detection(draw, detection)
     
