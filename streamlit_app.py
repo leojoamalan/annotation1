@@ -96,9 +96,6 @@ def draw_detection(draw, detection):
     for point in points:
         px, py = point['x'], point['y']
         draw.ellipse((px-1, py-1, px+1, py+1), fill="blue")
-def annotate_image(image, text):
-    draw = ImageDraw.Draw(image)
-    draw.text((10, 10), text, fill="black")
 
 st.title("Kidney Stone Annotation")
 
@@ -115,10 +112,11 @@ if uploaded_file is not None:
         for detection in result['predictions']:
             draw_detection(draw, detection)
         # Convert image to byte array for displaying
-        annotate_image(image, "Detected Objects")
         img_byte_arr = io.BytesIO()
         image.save(img_byte_arr, format='PNG')
         img_byte_arr = img_byte_arr.getvalue()
 if st.button('Annotate'):
         # Display the result image with detections
         st.image(image, caption='Processed Image.', use_column_width=True)
+        st.markdown("## Detected Objects")
+        st.text("Object 1: Type A")
