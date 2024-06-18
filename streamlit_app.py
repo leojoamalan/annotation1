@@ -40,7 +40,7 @@ def main():
 
     if not os.path.exists(MODEL_PATH):
         st.info("Downloading model...")
-        response = requests.get(MODEL_URL)
+        response = requests.get(model_url)
         with open(MODEL_PATH, 'wb') as f:
             f.write(response.content)
         st.success("Model downloaded!") 
