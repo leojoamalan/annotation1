@@ -139,7 +139,7 @@ CLIENT = InferenceHTTPClient(
 def draw_detection(draw, detection):
     x, y, w, h = detection['x'], detection['y'], detection['width'], detection['height']
     points = detection['points']
-    label = detection['class']  # Get the class label
+    label = 'Kidney Stone ' # Get the class label
     confidence = detection['confidence']  # Get the confidence level
 
     # Draw the bounding box
@@ -147,7 +147,7 @@ def draw_detection(draw, detection):
     top = y - h / 2
     right = x + w / 2
     bottom = y + h / 2
-    draw.rectangle([left, top, right, bottom], outline="red", width=2)
+    draw.rectangle([left, top, right, bottom], outline="purple", width=2)
 
     # Draw the points
     for point in points:
@@ -156,7 +156,7 @@ def draw_detection(draw, detection):
 
     # Add label and confidence level on top of the bounding box
     font = ImageFont.load_default()  # You can change the font and size here
-    draw.text((left, top - 20), f"{label} {confidence:.2f}", fill="red", font=font)
+    draw.text((left, top - 20), f"{label}", fill="white", font=font)
 
 st.title("Kidney Stone Annotation")
 
