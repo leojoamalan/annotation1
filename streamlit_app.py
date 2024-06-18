@@ -147,7 +147,7 @@ def draw_detection(draw, detection):
     top = y - h / 2
     right = x + w / 2
     bottom = y + h / 2
-    draw.rectangle([left, top, right, bottom], outline="purple", width=2)
+    draw.rectangle([left, top, right, bottom], outline="blue", width=2)
 
     # Draw the points
     for point in points:
