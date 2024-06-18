@@ -180,6 +180,6 @@ if uploaded_file is not None:
     img_byte_arr = io.BytesIO()
     image.save(img_byte_arr, format='PNG')
     img_byte_arr = img_byte_arr.getvalue()
-
+if st.button('Annotate'):
     # Display the result image with detections
     st.image(image, caption='Processed Image.', use_column_width=True)
