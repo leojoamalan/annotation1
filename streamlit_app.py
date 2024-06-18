@@ -223,8 +223,8 @@ def draw_detection(draw, detection):
 
 def draw_not_found(draw, image_size):
     font = ImageFont.load_default()
-    text = "No objects found"
-    text_width, text_height = 225,225
+    text = "Kidney Stone Not Found"
+    text_width, text_height = 1225,1225
     text_position = ((image_size[0] - text_width) // 2, (image_size[1] - text_height) // 2)
     draw.text(text_position, text, fill="white", font=font)
 
