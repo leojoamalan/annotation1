@@ -78,7 +78,7 @@ CLIENT = InferenceHTTPClient(
 )
 
 # infer on a local image
-result = CLIENT.infer(image, model_id="kidney-22s5u/1")
+#result = CLIENT.infer(image, model_id="kidney-22s5u/1")
 
 # Function to draw bounding boxes and points
 def draw_detection(draw, detection):
@@ -106,7 +106,7 @@ if uploaded_file is not None:
     # Load the uploaded image
     image = Image.open(uploaded_file)
     draw = ImageDraw.Draw(image)
-
+    result = CLIENT.infer(image, model_id="kidney-22s5u/1")
     # Draw the detections on the input image
     for detection in result['predictions']:
         draw_detection(draw, detection)
