@@ -64,7 +64,7 @@
 
 
 import streamlit as st
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw,ImageFont
 import io
 
 # Dummy detection result for demonstration purposes
@@ -96,6 +96,10 @@ def draw_detection(draw, detection):
     for point in points:
         px, py = point['x'], point['y']
         draw.ellipse((px-1, py-1, px+1, py+1), fill="blue")
+def annotate_image(image, text):
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.load_default()  # You can change the font and size here
+    draw.text((10, 10), text, fill="black", font=font)
 
 st.title("Kidney Stone Annotation")
 
@@ -111,6 +115,7 @@ if uploaded_file is not None:
         # Draw the detections on the input image
         for detection in result['predictions']:
             draw_detection(draw, detection)
+        annotate_image(image, "Detected Objects")
         # Convert image to byte array for displaying
         img_byte_arr = io.BytesIO()
         image.save(img_byte_arr, format='PNG')
@@ -118,5 +123,4 @@ if uploaded_file is not None:
 if st.button('Annotate'):
         # Display the result image with detections
         st.image(image, caption='Processed Image.', use_column_width=True)
-        st.markdown("## Detected Objects")
-        st.text("Object 1: Type A")
+        
