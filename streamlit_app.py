@@ -97,7 +97,7 @@ def draw_detection(draw, detection):
         px, py = point['x'], point['y']
         draw.ellipse((px-1, py-1, px+1, py+1), fill="blue")
 
-st.title("Object Detection Visualization")
+st.title("Kidney Stone Annotation")
 
 # File uploader for image upload
 uploaded_file = st.file_uploader("Choose an image...", type="jpg")
