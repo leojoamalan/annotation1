@@ -104,17 +104,19 @@ uploaded_file = st.file_uploader("Choose an image...", type="jpg")
 
 if uploaded_file is not None:
     # Load the uploaded image
-    image = Image.open(uploaded_file)
-    draw = ImageDraw.Draw(image)
-    result = CLIENT.infer(image, model_id="kidney-22s5u/1")
-    # Draw the detections on the input image
-    for detection in result['predictions']:
-        draw_detection(draw, detection)
-
-    # Convert image to byte array for displaying
-    img_byte_arr = io.BytesIO()
-    image.save(img_byte_arr, format='PNG')
-    img_byte_arr = img_byte_arr.getvalue()
-
-    # Display the result image with detections
-    st.image(image, caption='Processed Image.', use_column_width=True)
+    if st.button('Annotate'):
+        image = Image.open(uploaded_file)
+        draw = ImageDraw.Draw(image)
+        result = CLIENT.infer(image, model_id="kidney-22s5u/1")
+        # Draw the detections on the input image
+        st.image(image, caption='Uploaded Image', use_column_width=True)
+        for detection in result['predictions']:
+            draw_detection(draw, detection)
+    
+        # Convert image to byte array for displaying
+        img_byte_arr = io.BytesIO()
+        image.save(img_byte_arr, format='PNG')
+        img_byte_arr = img_byte_arr.getvalue()
+    
+        # Display the result image with detections
+        st.image(image, caption='Processed Image.', use_column_width=True)
