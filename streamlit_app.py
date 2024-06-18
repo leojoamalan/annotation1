@@ -222,7 +222,7 @@ def draw_detection(draw, detection):
     draw.text((left, top - 20), f"{label} ", fill=text_color, font=font)
 
 def draw_not_found(draw, image_size):
-    font = ImageFont.truetype("arial.ttf", 36)
+    font = ImageFont.load_default()
     text = "Kidney Stone Not Found"
     text_width, text_height = 225,300
     text_position = ((image_size[0] - text_width) // 2, (image_size[1] - text_height) // 2)
