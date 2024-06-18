@@ -118,5 +118,4 @@ if uploaded_file is not None:
         img_byte_arr = img_byte_arr.getvalue()
     
         # Display the result image with detections
-     if st.button('Annotate'):
         st.image(image, caption='Processed Image.', use_column_width=True)
