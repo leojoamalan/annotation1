@@ -231,7 +231,7 @@ def draw_not_found(draw, image_size):
 st.title("Kidney Stone Annotation")
 
 # File uploader for image upload
-uploaded_file = st.file_uploader("Choose an image...", type="jpg","png")
+uploaded_file = st.file_uploader("Choose an image...", type="jpg")
 
 if uploaded_file is not None:
     # Load the uploaded image
