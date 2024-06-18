@@ -98,7 +98,6 @@ def draw_detection(draw, detection):
         draw.ellipse((px-1, py-1, px+1, py+1), fill="blue")
 def annotate_image(image, text):
     draw = ImageDraw.Draw(image)
-    font = ImageFont.truetype("arial.ttf", 20)  # Adjust font and size as needed
     draw.text((10, 10), text, fill="black", font=font)
 
 st.title("Kidney Stone Annotation")
