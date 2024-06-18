@@ -224,7 +224,7 @@ def draw_detection(draw, detection):
 def draw_not_found(draw, image_size):
     font = ImageFont.load_default()
     text = "No objects found"
-    text_width, text_height = draw.textsize(text, font=font)
+    text_width, text_height = 125,125
     text_position = ((image_size[0] - text_width) // 2, (image_size[1] - text_height) // 2)
     draw.text(text_position, text, fill="red", font=font)
 
