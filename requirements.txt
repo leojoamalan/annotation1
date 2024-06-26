@@ -9,4 +9,3 @@ opencv-python
 super-gradients
 requests
 inference-sdk==0.9.9
-inference==0.8.0
